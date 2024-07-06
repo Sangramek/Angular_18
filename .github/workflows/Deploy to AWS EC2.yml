@@ -25,10 +25,10 @@ jobs:
         node-version: '14'
 
     - name: Install dependencies and build
+      working-directory: ./hello-app
       run: |
         npm install
         npm run build --prod
-        working directory: ./hello-app  
 
     - name: Setup SSH
       run: |
