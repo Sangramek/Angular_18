@@ -40,7 +40,7 @@ jobs:
 
     - name: Transfer files to EC2
       run: |
-        scp -o StrictHostKeyChecking=no -r dist/hello-app/* $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR
+        scp -o StrictHostKeyChecking=no -r hello-app/dist/hello-app/* $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR
 
     - name: Start application on EC2
       run: |
