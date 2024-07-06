@@ -18,7 +18,7 @@ jobs:
       with:
         node-version: '20'
   
-    - name: Change directory to blob/main/hello-app
+    - name: Change directory to /home/runner/work/Angular_18/Angular_18/hello-app
       run: cd hello-app    
 
     - name: Install dependencies
