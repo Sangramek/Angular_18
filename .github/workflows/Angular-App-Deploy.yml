@@ -27,6 +27,7 @@ jobs:
       
     - name: Build Angular app
       run: npm run build --prod
+      working-directory: ./hello-app
 
     - name: Deploy to AWS EC2
       if: github.ref == 'refs/heads/main' # Change this to your default branch if necessary
