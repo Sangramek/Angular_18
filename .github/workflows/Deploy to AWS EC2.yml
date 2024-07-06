@@ -28,6 +28,7 @@ jobs:
       run: |
         npm install
         npm run build --prod
+        working directory: ./hello-app  
 
     - name: Setup SSH
       run: |
