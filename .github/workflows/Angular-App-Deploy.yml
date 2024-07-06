@@ -1,0 +1,30 @@
+name: Angular App Deployment
+
+on: 
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+  
+    # - name: Change directory to hello-app
+    #   run: ./home/runner/work/Angular_18/Angular_18/hello-app/package.json
+  
+    - name: Install dependencies
+      run:  npm install
+      working-directory: ./hello-app
+      
+    - name: Build Angular app
+      run: npm run build --prod
+      working-directory: ./hello-app
