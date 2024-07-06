@@ -35,39 +35,16 @@ jobs:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         REMOTE_USER: ${{ secrets.REMOTE_USER }}
         REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-        
       run: |
-        mkdir -p ~/.ssh
-        echo "$SSH_PRIVATE_KEY" | tr -d '\r' | sed 's/\\n/\n/g' > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-
-        # Start the SSH agent
-        eval "$(ssh-agent -s)"
-        ssh-add ~/.ssh/id_rsa
-
-        # SSH commands for deployment
-        ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST << 'EOF'
+        echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+        ssh -o StrictHostKeyChecking=no ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} << 'EOF'
           mkdir -p ~/app
           rm -rf ~/app/*
         EOF
-
-        scp -r dist/hello-app/* $REMOTE_USER@$REMOTE_HOST:~/app/
-
-        ssh $REMOTE_USER@$REMOTE_HOST << 'EOF'
+        scp -r dist/hello-app/* ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:~/app/
+        ssh ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} << 'EOF'
           cd ~/app
+          # Replace the following command with the one to start your Angular app if necessary
           nohup npx http-server -p 8080 &
         EOF
- 
-      # run: |
-      #   echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
-      #   ssh -o StrictHostKeyChecking=no ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} << 'EOF'
-      #     mkdir -p ~/app
-      #     rm -rf ~/app/*
-      #   EOF
-      #   scp -r dist/hello-app/* ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:~/app/
-      #   ssh ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} << 'EOF'
-      #     cd ~/app
-      #     # Replace the following command with the one to start your Angular app if necessary
-      #     nohup npx http-server -p 8080 &
-      #   EOF
       
