@@ -18,11 +18,11 @@ jobs:
       with:
         node-version: '20'
   
-    # - name: Change directory to hello-app
-    #   run: cd /home/runner/work/Angular_18/Angular_18/hello-app
+    - name: Change directory to hello-app
+      run: cd /home/runner/work/Angular_18/Angular_18/hello-app
   
     - name: Install dependencies
-      run:  cd /home/runner/work/Angular_18/Angular_18/hello-app npm install
+      run:  npm install
       
     - name: Build Angular app
       run: npm run build --prod
